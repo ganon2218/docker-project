@@ -1,0 +1,6 @@
+docker run -dit --name mysqldb -e MYSQL_ROOT_PASSWORD=mydb -e MYSQL_USER=nipurn -e MYSQL_PASSWORD=nagar -e MYSQL_DATABASE=mydb -v mysql-storage:/var/lib/mysql mysql:latest
+
+docker run -dit --name mydp -e MYSQL_NAME=mydb -e MYSQL_USER=nipurn -e MYSQL_PASSWORD=nagar --link mysqldb -p 8080:80 -v dp_storage:/var/www/html/sites/default/files -v dp_profiles:/var/www/html/profiles -v dp_modules:/var/www/html/modules  drupal:latest
+
+ docker run -dit -e WORDPRESS_DB_HOST=mysqldb -e WORDPRESS_DB_USER=nipurn -e WORDPRESS_DB_PASSWORD=nagar -e WORDPRESS_DB_NAME=mydb --link mysqldb -p 8080:80 -v wp_storage:/var/www/html --name mywp wordpress:latest
+
