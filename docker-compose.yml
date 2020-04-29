@@ -1,0 +1,33 @@
+version: '3'
+services: 
+ mysqldb:
+   image: mysql:latest
+   volumes: 
+      - mysql-storage:/var/lib/mysql
+   restart: always
+   environment: 
+      MYSQL_ROOT_PASSWORD: mydb
+      MYSQL_USER: nipurn 
+      MYSQL_PASSWORD: nagar
+      MYSQL_DATABASE: mydb
+
+ mydp:
+   image: drupal:latest
+   restart: always
+   environment:
+     MYSQL_NAME: mydb
+     MYSQL_USER: nipurn
+     MYSQL_PASSWORD: nagar
+   volumes:
+     - dp_storage:/var/www/html/sites/default/files
+     - dp_profiles:/var/www/html/profiles
+     - dp_modules:/var/www/html/modules 
+   depends_on:
+     - mysqldb
+   ports:
+     - 8080:80
+volumes:
+     mysql-storage:
+     dp_storage:
+     dp_profiles:
+     dp_modules:
